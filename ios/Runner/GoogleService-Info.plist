@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>231195648290-rlq2uti86mf4u674mr7085dcnea0evme.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.231195648290-rlq2uti86mf4u674mr7085dcnea0evme</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBfm8_ZEJKX2HGBcggz4EawLVvl2PnhM60</string>
+	<key>GCM_SENDER_ID</key>
+	<string>231195648290</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.humanclockworks.notetime</string>
+	<key>PROJECT_ID</key>
+	<string>note-time-project</string>
+	<key>STORAGE_BUCKET</key>
+	<string>note-time-project.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:231195648290:ios:8fb4ab6793af504500857b</string>
+</dict>
+</plist>

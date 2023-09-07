@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "231195648290",
+    "project_id": "note-time-project",
+    "storage_bucket": "note-time-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231195648290:android:6b10dc35877f4a4400857b",
+        "android_client_info": {
+          "package_name": "com.humanclockworks.notetime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231195648290-0e4elrsvqi0o4mk2t6h8b4gvupiohsft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL11snxzTRspZhSkgiQYpfhSUyqrIw0xA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231195648290-0e4elrsvqi0o4mk2t6h8b4gvupiohsft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
