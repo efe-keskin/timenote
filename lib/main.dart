@@ -6,7 +6,7 @@ import 'views/login_view.dart';
 import 'views/register_view.dart';
 import 'views/verify_email_view.dart';
 import 'dart:developer' as devtools show log;
-
+import 'constants/routes.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
@@ -18,9 +18,9 @@ void main() {
     ),
     home: const HomePage(),
     routes: {
-      '/login': (context) => const LoginView(),
-      '/register': (context) => const RegisterView(),
-      '/note': (context) => const NotesView(),
+      loginRoute: (context) => const LoginView(),
+      registerRoute: (context) => const RegisterView(),
+      notesRoute: (context) => const NotesView(),
     },
   ));
 }
@@ -46,9 +46,6 @@ class HomePage extends StatelessWidget {
             } else {
               return const LoginView();
             }
-          // final emailVerified = user?.emailVerified ?? false;
-          // if (emailVerified) {print('You are a verified user');}
-          // else {print('You are not a verified user'); return VerifyEmailView();}
           default:
             return const CircularProgressIndicator();
         }
@@ -82,7 +79,7 @@ class _NotesViewState extends State<NotesView> {
                   if (shouldLogout) {
                     await FirebaseAuth.instance.signOut();
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/login', (route) => false);
+                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   }
                   devtools.log(shouldLogout.toString());
                   break;
