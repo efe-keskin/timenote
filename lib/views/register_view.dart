@@ -1,7 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -30,52 +29,38 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Register"),
-        backgroundColor: Colors.pink,
-      ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Column(
-                children: [
-                  TextField(
-                      controller: _email,
+              return Scaffold(
+                appBar: AppBar(title: Text("Register"),backgroundColor: Colors.deepPurpleAccent,),
+                body: Column(
+                  children: [
+                    TextField(
+                        controller: _email,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                            hintText: "Enter your email here")),
+                    TextField(
+                      controller: _password,
+                      obscureText: true,
                       autocorrect: false,
                       enableSuggestions: false,
-                      keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
-                          hintText: "Enter your email here")),
-                  TextField(
-                    controller: _password,
-                    obscureText: true,
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    decoration: const InputDecoration(
-                        hintText: "Enter your password here"),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      try {final email = _email.text;
-                      final password = _password.text;
-                      final userCredential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                          email: email, password: password);
-                      print(userCredential);
-                      } on FirebaseAuthException catch (e) {print(e.code); if (e.code =='email-already-in-use'){print("Email is already in use");}else if (e.code =='weak-password'){print("The password is too weak");}else if (e.code == 'invalid email'){print('Invalid email');}}},
-                    child: const Text("Register"),
-                  ),
-                ],
+                          hintText: "Enter your password here"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        try {final email = _email.text;
+                        final password = _password.text;
+                        final userCredential = await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                            email: email, password: password);
+                        print(userCredential);
+                        } on FirebaseAuthException catch (e) {print(e.code); if (e.code =='email-already-in-use'){print("Email is already in use");}else if (e.code =='weak-password'){print("The password is too weak");}else if (e.code == 'invalid email'){print('Invalid email');}}},
+                      child: const Text("Register"),
+                    ),TextButton(onPressed: () {Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false);}, child: Text("Already have an account?  Login Here!"))
+                  ],
+                ),
               );
-            default:
-              return const Text("Loading");
-          }
-        },
-      ),
-    );
   }
 }
