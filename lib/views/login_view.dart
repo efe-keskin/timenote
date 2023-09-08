@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notetime/constants/routes.dart';
 import 'package:notetime/views/register_view.dart';
 import 'dart:developer' as devtools show log;
+import 'package:notetime/utilities/show_error_dialog.dart';
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -64,19 +65,22 @@ class _LoginViewState extends State<LoginView> {
                     .pushNamedAndRemoveUntil(notesRoute, (route) => false);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
-                  devtools.log("The e-mail isn't registered");
+                  showErrorDialog(context, "Account not found");
                 } else if (e.code == 'wrong-password') {
-                  devtools.log('The password you entered is wrong');
+                  showErrorDialog(context, "Wrong credentials");
                 } else if (e.code == 'too-many-requests') {
-                  devtools.log(
-                      'You have attemted to many wrong passwords, reset your password to continue');
+                  showErrorDialog(context, "Too many wrong attempts");
                 } else if (e.code == 'user-disabled') {
-                  devtools.log('This account has been disabled');
+                  showErrorDialog(context, "This account is disabled");
                 } else if (e.code == 'channel-error') {
-                  devtools.log('email and password cant be blank');
+                  showErrorDialog(context, "Email and Password cant be empty");
                 } else {
                   devtools.log(e.code);
+                  await showErrorDialog(context, "Error: ${e.code}");
                 }
+              }catch (e) {
+                showErrorDialog(context, e.toString());
+
               }
             },
             child: const Text("Login"),
@@ -92,3 +96,4 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
+
