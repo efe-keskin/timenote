@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notetime/services/auth/auth_service.dart';
 import 'dart:developer' as devtools show log;
 import 'package:notetime/utilities/show_logout_dialog.dart';
 import '../constants/routes.dart';
@@ -27,7 +27,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
                   if (shouldLogout) {
-                    await FirebaseAuth.instance.signOut();
+                    await AuthService.firebase().logOut();
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         registerRoute, (route) => false);
                   }
@@ -49,13 +49,12 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             "We've sent you a verification email, please check out your mailbox."),
         TextButton(
             onPressed: () {
-              final user = FirebaseAuth.instance.currentUser;
-              user?.sendEmailVerification();
+              AuthService.firebase().sendEmailVerification();
             },
             child: Text("Send a new verification email")),
         TextButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              AuthService.firebase().logOut();
               Navigator.of(context)
                   .pushNamedAndRemoveUntil(registerRoute, (route) => false);
             },

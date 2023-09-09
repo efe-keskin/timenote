@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notetime/constants/routes.dart';
-import 'package:notetime/views/register_view.dart';
-import 'dart:developer' as devtools show log;
+import 'package:notetime/services/auth/auth_service.dart';
 import 'package:notetime/utilities/show_error_dialog.dart';
+
+import '../services/auth/auth_exceptions.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -56,34 +57,24 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                final userCredential = await AuthService.firebase().logIn(
                   email: email,
                   password: password,
                 );
-                final user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified == true) {
+                final user = AuthService.firebase().currentUser;
+                if (user?.isEmailVerified == true) {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(notesRoute, (route) => false);
-                }
-                else { Navigator.of(context).pushNamedAndRemoveUntil(verifyRoute, (route) => false);}
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  await showErrorDialog(context, "Account not found");
-                } else if (e.code == 'wrong-password') {
-                  await showErrorDialog(context, "Wrong credentials");
-                } else if (e.code == 'too-many-requests') {
-                  await showErrorDialog(context, "Too many wrong attempts");
-                } else if (e.code == 'user-disabled') {
-                  await showErrorDialog(context, "This account is disabled");
-                } else if (e.code == 'channel-error') {
-                  await showErrorDialog(context, "Email and Password cant be empty");
                 } else {
-                  await showErrorDialog(context, "Error: ${e.code}");
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(verifyRoute, (route) => false);
                 }
-              }catch (e) {
-                await showErrorDialog(context, e.toString());
-
+              } on UserNotFoundAuthException {
+                await showErrorDialog(context, "User not found");
+              } on WrongPasswordAuthException {
+                await showErrorDialog(context, "Password is wrong");
+              } on GenericAuthException {
+                await showErrorDialog(context, "Authentication error");
               }
             },
             child: const Text("Login"),
@@ -99,4 +90,3 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
-

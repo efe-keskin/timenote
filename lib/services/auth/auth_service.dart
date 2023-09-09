@@ -1,10 +1,12 @@
+import 'package:notetime/services/auth/firebase_auth_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'auth_provider.dart';
 import 'auth_user.dart';
 
 class AuthService implements AuthProvider {
   final AuthProvider provider;
   const AuthService(this.provider);
-
+  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
   @override
   Future<AuthUser> createUser({
     required String email,
@@ -12,9 +14,11 @@ class AuthService implements AuthProvider {
   }) =>
     provider.createUser(email: email, password: password);
 
-
   @override
-  // TODO: implement currentUser
+  Future<void> initialize() async{
+    provider.initialize();
+  }
+  @override
   AuthUser? get currentUser => provider.currentUser;
 
   @override
@@ -32,4 +36,6 @@ class AuthService implements AuthProvider {
   @override
   Future<void> sendEmailVerification() async {provider.sendEmailVerification();
   }
+
+
 }
