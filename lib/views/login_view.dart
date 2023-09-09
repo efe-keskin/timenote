@@ -65,21 +65,20 @@ class _LoginViewState extends State<LoginView> {
                     .pushNamedAndRemoveUntil(notesRoute, (route) => false);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
-                  showErrorDialog(context, "Account not found");
+                  await showErrorDialog(context, "Account not found");
                 } else if (e.code == 'wrong-password') {
-                  showErrorDialog(context, "Wrong credentials");
+                  await showErrorDialog(context, "Wrong credentials");
                 } else if (e.code == 'too-many-requests') {
-                  showErrorDialog(context, "Too many wrong attempts");
+                  await showErrorDialog(context, "Too many wrong attempts");
                 } else if (e.code == 'user-disabled') {
-                  showErrorDialog(context, "This account is disabled");
+                  await showErrorDialog(context, "This account is disabled");
                 } else if (e.code == 'channel-error') {
-                  showErrorDialog(context, "Email and Password cant be empty");
+                  await showErrorDialog(context, "Email and Password cant be empty");
                 } else {
-                  devtools.log(e.code);
                   await showErrorDialog(context, "Error: ${e.code}");
                 }
               }catch (e) {
-                showErrorDialog(context, e.toString());
+                await showErrorDialog(context, e.toString());
 
               }
             },

@@ -7,6 +7,7 @@ import 'views/register_view.dart';
 import 'views/verify_email_view.dart';
 import 'dart:developer' as devtools show log;
 import 'constants/routes.dart';
+import 'package:notetime/utilities/show_logout_dialog.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
@@ -21,6 +22,7 @@ void main() {
       loginRoute: (context) => const LoginView(),
       registerRoute: (context) => const RegisterView(),
       notesRoute: (context) => const NotesView(),
+      verifyRoute: (context) => const VerifyEmailView(),
     },
   ));
 }
@@ -97,28 +99,4 @@ class _NotesViewState extends State<NotesView> {
       body: Text("Hello World"),
     );
   }
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Sign out'),
-        content: const Text("Are you sure you want to log out?"),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              child: Text('Log Out')),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: Text("Cancel"))
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
 }
